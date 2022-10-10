@@ -1,0 +1,52 @@
+ /* Below 1800 PX  */
+@media (max-width: 112.5em) {
+    .sidebar {
+        padding: 2rem 1rem 2rem 1rem !important;
+    }
+    .workout-reset {
+        top: 9rem !important;
+        right: 10% !important;
+    }
+}
+ /* Below 1500 PX  */
+@media (max-width: 93.75em) {
+    .workout {
+        padding: 0.5rem 1.25rem !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .weatherIcon {
+        top: 10% !important;
+    }
+    .sidebar {
+        flex-basis: 50rem !important;
+    }
+}
+ /* Below 1250 PX  */
+@media (max-width: 78.125em) {
+    html {
+        font-size: 50% !important;
+    }
+}
+ /* Below 950 PX  */
+@media (max-width: 59.375em) {
+    html {
+        font-size: 45% !important;
+    }
+    body {
+        padding: 0% !important;
+    }
+}
+ /* Below 750 PX  */
+@media (max-width: 46.875em) {
+    .sidebar {
+        flex-basis: 40rem !important;
+    }
+}
+ /* Below 550 PX  */
+@media (max-width: 34.375em) {
+    body {
+        flex-direction: column;
+        height: 180vh !important;
+    }
+}
+
