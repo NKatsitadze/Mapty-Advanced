@@ -46,7 +46,19 @@
 @media (max-width: 34.375em) {
     body {
         flex-direction: column;
-        height: 180vh !important;
+    }
+    .sidebar {
+        height: 25%;
+        flex-basis: 30rem !important;
+        padding: 1rem 0.5rem 1rem 0.5rem !important;
+    }
+    .logo {
+        display: none;
+    }
+    .workout {
+        margin-bottom: 0.75rem !important;
+    }
+    .copyright {
+        display: none;
     }
 }
-
