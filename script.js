@@ -1,14 +1,11 @@
 'use strict';
 
 // prettier-ignore
-// const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
 const form = document.querySelector('.form');
 const formBtn = document.querySelector('.form__btn');
 const sidebar = document.querySelector('.sidebar');
 
-const body = document.querySelector('body');
-const map = document.querySelector('#map');
+// const map = document.querySelector('#map');
 const containerWorkouts = document.querySelector('.workouts');
 const inputType = document.querySelector('.form__input--type');
 const inputDistance = document.querySelector('.form__input--distance');
@@ -16,12 +13,9 @@ const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 
-
-// We're using classes to create parent Workout and Children Running/Cycling workout objects,
-// so we can save our workout infos comfortably in those objects
 class Workout {
     date = new Date();
-    id = String(Date.now()).slice(-5); // this way we create unique ID for every single workout / we could also use Math.Random() or some other method...
+    id = String(Date.now()).slice(-5); // unique ID
 
     constructor(coords, distance, duration) {
         this.coords = coords;
@@ -31,7 +25,7 @@ class Workout {
 
     _setDescription() {
         // prettier-ignore
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${months[this.date.getMonth()]} ${this.date.getDate()}`
     }
 };
@@ -49,7 +43,6 @@ class Running extends Workout {
         this.pace = this.duration / this.distance;
         return this.pace;
     }
-
 };
 
 
@@ -66,14 +59,9 @@ class Cycling extends Workout {
         this.speed = this.distance / (this.duration/60);
         return this.speed;
     }
-    
 };
 
-/////////////////////////////////////
-/////////////////////////////////////
-/////////////////////////////////////
 class App {
-    // Using #s we are encapsulating those variables so nobody can interfare into them from outside
     #map; // in this div element, we store whole leaflet liblary map
     #mapEvent; // what happens when we click on map (leaflet library)
     #workoutsArr = []; // our workout objects are stored in this array
@@ -105,14 +93,11 @@ class App {
 
 
         // This part of code brings weather data and manipulates with it everytime our app is refreshed
-        const allWorkHTML = document.getElementsByClassName('workout');
         this.#workoutsArr.forEach(eachMemb => {
             const getWeather = async function() { 
             try {
                     const lat = eachMemb.coords[0];
                     const lon = eachMemb.coords[1];
-                    const unit = 'metric';
-                    const lang = 'en';
                     const key = '269dbe2bd46b4f1d7ce0ff26bdc1e66e'
                     const promise = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&exclude=hourly, daily&appid=${key}`);
                     if(!promise.ok) throw new Error('Something went wrong')
@@ -127,9 +112,6 @@ class App {
             (async function () {
                 try {
                     const info = await getWeather();
-                    const weatherLoc = document.querySelector('.weatherLocation');
-                    const weatherCondition = document.querySelector('.weatherCondition');
-                    const weatherIcon = document.querySelector('.weatherIcon');
                     
                     const box = document.querySelectorAll('.workout');
                     box.forEach(memb => {
@@ -158,10 +140,7 @@ class App {
 
     _loadMap(position) {
             // we're using simple destructuring down, bcs position.coords is an object
-            const {latitude} = position.coords; 
-            const {longitude} = position.coords;
-        
-            // client's location
+            const { latitude, longitude } = position.coords; 
             const coords = [latitude, longitude];
             this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
         
@@ -467,15 +446,12 @@ class App {
     }
 
     _renderWeather(workoutArr)  {
-        const allWorkHTML = document.getElementsByClassName('workout');
-        
+
         workoutArr.forEach(eachMemb => {
             const getWeather = async function() { 
             try {
                     const lat = eachMemb.coords[0];
                     const lon = eachMemb.coords[1];
-                    const unit = 'metric';
-                    const lang = 'en';
                     const key = '269dbe2bd46b4f1d7ce0ff26bdc1e66e'
                     const promise = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&exclude=hourly, daily&appid=${key}`);
                     if(!promise.ok) throw new Error('Something went wrong')
@@ -490,9 +466,6 @@ class App {
             (async function () {
                 try {
                     const info = await getWeather();
-                    const weatherLoc = document.querySelector('.weatherLocation');
-                    const weatherCondition = document.querySelector('.weatherCondition');
-                    const weatherIcon = document.querySelector('.weatherIcon');
                     
                     const box = document.querySelectorAll('.workout');
                     box.forEach(memb => {
@@ -512,11 +485,3 @@ class App {
 }
 
 const app = new App();
-
-
-// I have explained almost everything using comments, so you understand why I used specific technicues,
-// but also, this project has several bugs and I'm aware of them, unfortunately leaflet library
-// is not a comfortable library to work with, some bugs are coming from leaflet itself too, also
-// openweathermap API package is free and lacks some important features (and is slow sometimes), as I'm not willing to pay for it 
-// at current moment, so some bugs are coming from API itself too. 
-//Thanks for checking out =)
